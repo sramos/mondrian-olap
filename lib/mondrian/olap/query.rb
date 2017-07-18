@@ -351,11 +351,16 @@ module Mondrian
         # generate set MDX expression
         if @where[0].is_a?(Symbol) ||
             @where.length > 1 && @where.map{|full_name| extract_dimension_name(full_name)}.uniq.length == 1
-          members_to_mdx(@where)
+          #members_to_mdx(@where)
+          puts " ====SET==== (mondrian-olap:query.rb:where_to_mdx) : " + @where.inspect
+          result = where_to_mdx_tuple
         # generate tuple MDX expression
         else
-          where_to_mdx_tuple
+          puts " ===TUPLE=== (mondrian-olap:query.rb:where_to_mdx) : " + @where.inspect
+          result = where_to_mdx_tuple
         end
+        puts "            result: " + result
+        return result
       end
 
       def where_to_mdx_tuple
